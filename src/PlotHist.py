@@ -39,9 +39,10 @@ def main():
 
     assert os.path.isfile(file_name), file_name+" not found"
     file = uproot.open(file_name)
-
+    # print(file.__dict__["_keys"][0].__dict__)
+    # input()
     tree=file[tree_name]
-    caz=tree[branch_name].array(library="pd")
+    caz=tree[branch_name].array(library="pd") # Parse the TTree to a Panda dataframe
 
     @st.cache
     def Generate_Histogram(num_bins,hist_range,df):
@@ -52,12 +53,16 @@ def main():
 
     st.title("Interactive Histogram")
 
+    st.checkbox("Display e")
+
     nb = st.slider('Number of bins',min_value=1,max_value=100,value=12)
     hist_range = st.slider('Range of histogram',value=[0.0,500.0])
 
     h=Generate_Histogram(nb,hist_range,caz)
     fig,ax = plt.subplots()
     hep.histplot(h)
+    plt.xlabel(branch_name)
+    plt.ylabel("Number of events")
     st.pyplot(fig)
 
 
