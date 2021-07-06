@@ -24,6 +24,7 @@ but therefore requires a number of third-party dependencies:
 # Standard imports
 import sys
 import os
+import math
 
 # Third-party imports
 from streamlit import cli as stcli
@@ -33,6 +34,7 @@ import matplotlib.pyplot as plt
 import mplhep as hep
 import uproot
 import boost_histogram as bh
+
 
 
 def main():
@@ -46,10 +48,30 @@ def main():
 
     @st.cache
     def Generate_Histogram(num_bins,hist_range,df):
-        bins = np.linspace(hist_range[0]*1e3,hist_range[1]*1e3,nb+1)
+        bins = np.linspace(hist_range[0],hist_range[1],nb+1)
         h = bh.Histogram(bh.axis.Variable(bins))
         h.fill(df)
         return h
+
+    def Get_Extrema(df):
+        import math
+        return float(math.ceil(df.max())),float(math.floor(df.min()))
+
+    #Streamlit suffers from the problem of being slow to generate a slider for histogram extrema which are very large values 
+    #This is problematic for pT and eta
+    
+
+    def EPT_Histogram(nb,minH,maxH,caz):
+        nearest10k = lambda a: math.ceil(a/10e3)*10e3
+        maxH = nearest10k(maxH)
+        hist_range = st.slider('Range of histogram',value=[0.0,maxH/1e3])
+        hist_range = tuple([1e3*x for x in hist_range])
+        return Generate_Histogram(nb,hist_range,caz)
+
+    def Angular_Histogram(nb,minH,maxH,caz):
+        hist_range = st.slider('Range of histogram',value=[minH,maxH])
+        return Generate_Histogram(nb,hist_range,caz)
+
 
     st.title("Interactive Histogram")
 
@@ -57,14 +79,28 @@ def main():
         st.write(caz)
 
     nb = st.slider('Number of bins',min_value=1,max_value=100,value=50)
-    hist_range = st.slider('Range of histogram',value=[0.0,500.0])
 
-    h=Generate_Histogram(nb,hist_range,caz)
+    maxH,minH = Get_Extrema(caz)
+
+    # Switch statement to select correct histogram based on branch name
+    if "_eta" in branch_name or "_phi" in branch_name:
+        h = Angular_Histogram(nb,minH,maxH,caz)
+    else:
+        h = EPT_Histogram(nb,minH,maxH,caz)
+
+    ### Plotting
+
     fig,ax = plt.subplots()
     hep.histplot(h)
     plt.xlabel(branch_name)
     plt.ylabel("Number of events")
     st.pyplot(fig)
+
+    # if st.button("Reset"):
+    #     nb = 50
+    #     hist_range = [minH,maxH]
+
+
 
 
 if __name__ == '__main__':
