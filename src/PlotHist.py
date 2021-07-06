@@ -5,6 +5,12 @@
 For plotting single histograms in a streamlit web-app, with controls for binning
 and histogram range.
 
+Run either through python3 or streamlit commands:
+```python3 PlotHist.py <file_name> <tree_name> <branch_name>```
+or
+```streamlit run <file_name> <tree_name> <branch_name>```
+
+
 This script is specfically designed to not use ROOT,
 but therefore requires a number of third-party dependencies:
     - numpy = defining arrays
@@ -30,9 +36,6 @@ import boost_histogram as bh
 
 
 def main():
-
-    print(sys.argv)
-    input()
 
     assert os.path.isfile(file_name), file_name+" not found"
     file = uproot.open(file_name)
