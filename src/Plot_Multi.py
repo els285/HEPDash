@@ -37,11 +37,15 @@ import boost_histogram as bh
 
 
 @st.cache
-def Generate_Histogram(num_bins,hist_range,df):
+def Generate_Histogram(num_bins,hist_range,df,normalise):
     bins = np.linspace(hist_range[0],hist_range[1],num_bins+1)
     h = bh.Histogram(bh.axis.Variable(bins))
     h.fill(df)
-    return h
+    if normalise:
+        return h/h.sum()
+    else:
+        return h
+
 
 def Get_Extrema(df):
     import math
@@ -70,6 +74,8 @@ def Branch2Hist(tree,branch_name,index):
     nb = st.slider('Number of bins',min_value=1,max_value=100,value=50,key=index)
     maxH,minH = Get_Extrema(df)
 
+    #####
+
     # Switch statement to select correct histogram based on branch name
     if "_eta" in branch_name or "_phi" in branch_name:
         h = Angular_Histogram(nb,minH,maxH,df,index)
@@ -78,10 +84,14 @@ def Branch2Hist(tree,branch_name,index):
 
     return h ,df
 
-def Plot_SingleHist(h,branch_name):
 
-    print(h.__dict__)
-    input()
+
+# class PolyHist:
+
+#     d
+
+
+def Plot_SingleHist(h,branch_name):
 
     fig,ax = plt.subplots()
     hep.histplot(h)
@@ -92,21 +102,61 @@ def Plot_SingleHist(h,branch_name):
 
 class PhysOb_Page:
 
-    def __init__(self,phys_ob,tree,branches2plot):
+    def __init__(self,phys_ob,dic_of_trees,branches2plot):
         self.phys_ob        = phys_ob
-        self.tree           = tree
+        self.dic_of_trees  = dic_of_trees
         self.branches2plot  = branches2plot
 
     def Build(self):
 
-        st.write("# " + self.phys_ob)
+        st.write("## " + self.phys_ob)
 
+        # Selects obs as the observable in question
         obs = st.selectbox("Choose an observable",self.branches2plot)
 
-        h,df = Branch2Hist(self.tree,obs,self.phys_ob+"_"+obs)
-        Plot_SingleHist(h,obs)
-        if st.checkbox("Display events?"):
-            st.write(df)
+        dic_of_df = {}
+
+
+        # Extract TBranches to DF and compute limits
+        maxH_list , minH_list = [],[]
+
+        # Automatically compute histogram bounds
+        for tree_name,tree in self.dic_of_trees.items():
+            df = tree[obs].array(library="pd")
+            dic_of_df[tree_name] = df
+            maxH,minH = Get_Extrema(df)
+            maxH_list.append(maxH)
+            minH_list.append(minH)
+        max_HH, min_HH = max(maxH_list),min(minH_list)
+        # print(max_HH,min_HH)
+        # input()
+
+        # Bin slider
+        index = self.phys_ob+"_"+obs
+        nb = st.slider('Number of bins',min_value=1,max_value=100,value=50,key=index)
+
+        # Generate the bin edge slider based on observable type
+        if "_eta" in obs or "_phi" in obs:
+            hist_range = st.slider('Range of histogram',value=[minH,maxH],key=index)
+        else:
+            # Getting the binning to work well with slider
+            nearest10k = lambda a: math.ceil(a/10e3)*10e3
+            maxH = nearest10k(maxH)
+            hist_range = st.slider('Range of histogram',value=[0.0,maxH/1e3],key=index)
+            hist_range = tuple([1e3*x for x in hist_range])
+        dic_of_hists = {}
+
+
+        normalise = st.checkbox("Show normalised",value=True)
+        for name,df in dic_of_df.items():
+
+            h = Generate_Histogram(nb,hist_range,df,normalise=normalise)
+            dic_of_hists[name] = h
+
+        fig,ax = plt.subplots()
+        [hep.histplot(h,yerr=False) for h in dic_of_hists.values()]
+        st.pyplot(fig)
+
 
 
 class MultiPage:
@@ -126,17 +176,30 @@ class MultiPage:
 
 def main():
 
-    st.title("HEP-Dash: Interactive ROOT File Visualisation!")
+    st.title("HEP-Dash")
+
+    st.write("### Interactive HEP Visualisation!")
 
     # st.write("welcome to the first attempt at multi-page histogram Visualisation")
 
-    assert os.path.isfile(file_name), file_name+" not found"
-    file = uproot.open(file_name)
+    # assert os.path.isfile(file_name), file_name+" not found"
 
-    tree=file[tree_name]
+    file1 = uproot.open("~/Documents/feb15_test1.root")
+    tree1 = file1["smeared"]
 
-    muon        =  PhysOb_Page("Muon",tree,["mu_pt","mu_eta","mu_phi","mu_e"])
-    electron    =  PhysOb_Page("Electron",tree,["el_pt","el_eta","el_phi","el_e"])#,"mu_eta"])
+    file2 = uproot.open("~/Documents/feb15_test4_withcuts.root")
+    tree2 = file2["smeared"]
+
+    # input_trees = {}
+    # for imp in imported_
+    input_trees = {"tree1":tree1,"tree2":tree2}
+
+    # print(input_trees)
+    # input()
+
+    # Pass list of trees here
+    muon        =  PhysOb_Page("Muon",input_trees,["mu_pt","mu_eta","mu_phi","mu_e"])
+    electron    =  PhysOb_Page("Electron",input_trees,["el_pt","el_eta","el_phi","el_e"])#,"mu_eta"])
 
     MP = MultiPage()
     MP.add_page(muon)
@@ -150,10 +213,10 @@ def main():
 
 if __name__ == '__main__':
     if st._is_running_with_streamlit:
-        file_name   = sys.argv[1]
-        tree_name   = sys.argv[2]
+        # file_name   = sys.argv[1]
+        # tree_name   = sys.argv[2]
         # branch_name = sys.argv[3]
         main()
     else:
-        sys.argv = ["streamlit", "run", sys.argv[0],sys.argv[1],sys.argv[2]]#,sys.argv[3]]
+        sys.argv = ["streamlit", "run", sys.argv[0]]#,sys.argv[1],sys.argv[2]]#,sys.argv[3]]
         sys.exit(stcli.main())
