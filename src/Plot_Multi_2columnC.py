@@ -91,7 +91,7 @@ def Get_Extrema(df):
 def EPT_Histogram(nb,minH,maxH,df,index):
     nearest10k = lambda a: math.ceil(a/10e3)*10e3
     maxH = nearest10k(maxH)
-    hist_range = st.slider('Range of histogram',value=[0.0,maxH/1e3],key=index)
+    hist_range = st.slider('Range of histogram',value=[0.0,maxH/1e3],key=index,step=10.0)
     hist_range = tuple([1e3*x for x in hist_range])
     return Generate_Histogram(nb,hist_range,df)
 
@@ -290,7 +290,7 @@ class PhysOb_Page_TwoColumn:
                 # Getting the binning to work well with slider
                 nearest10k = lambda a: math.ceil(a/10e3)*10e3
                 maxH = nearest10k(extrema.max)
-                hist_range = st.slider('Range of histogram',value=[0.0,maxH/1e3],key=index)
+                hist_range = st.slider('Range of histogram',value=[0.0,maxH/1e3],key=index,step=10.0)
                 hist_range = tuple([1e3*x for x in hist_range])
             page_data["hist_range"] = hist_range
 

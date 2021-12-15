@@ -21,8 +21,8 @@ from streamlit import cli as stcli
 
 # Package imports
 from Plot_Multi_2columnC import PhysOb_Page_TwoColumn, MultiPage
-from Apps2 import Premade_Tree_Comparison_App
-
+# from Apps2 import Premade_Tree_Comparison_App
+from Tree_AppsB import Preset 
 
 input_dic = {"file1": ["~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_particleLevel_even.root" , "particleLevel_even"] ,
              "file2": ["~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_reco_even.root"          , "reco_even"]}
@@ -35,7 +35,7 @@ def main():
     st.title("HEP Dash")
 
     # Import the data
-    data_object = Premade_Tree_Comparison_App(input_dic)
+    data_object = Preset(input_dic)
     input_trees = {io.name : io.tree for io in data_object.list_of_input_objects}
 
     # Pass list of trees here
