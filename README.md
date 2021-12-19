@@ -10,3 +10,23 @@ Most up-to-date functionality so far is the `make_premade_comparison_app.py` fun
 
 
 For effective README exhibiting features of the app, use this site to create screen recordings: https://gifcap.dev/
+
+## Features
+
+Histograms can be manipulated and downloaded.
+
+
+
+## Installation
+
+
+
+## From Trees
+
+Generate and deploy a HEP-Dash app using ROOT TTrees! HEP-Dash automatically handles the histogram construction, projection and rendering.
+
+
+
+## From Histograms
+
+Display and manipulate ROOT histograms (maybe other types?) through a HEP-Dash app!
