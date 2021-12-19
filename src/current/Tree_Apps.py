@@ -68,17 +68,19 @@ class Tree_Comparison_App:
             self.list_of_input_objects.append(io)
         
         self.load()
-        self.check_trees_for_branches()
+        # self.check_trees_for_branches()
 
     def load(self):
 
         for v in self.list_of_input_objects:
             v.tree = import_ROOT_file(v.ROOT_file_path,v.tree_name)
+        
 
     def check_trees_for_branches(self):
 
         for io in self.list_of_input_objects:
             assert all([branch_name in io.tree.keys() for branch_name in self.all_branches]), "Not all prerequisit branches found in tree"
+
 
 
 
@@ -94,6 +96,9 @@ class Preset(Tree_Comparison_App):
 
     def __init__(self,input_dictionary):
         super().__init__(input_dictionary) 
+        self.check_trees_for_branches()
+
+
 
 
 class Specific(Tree_Comparison_App):
@@ -120,12 +125,26 @@ class General(Tree_Comparison_App):
     For taking all branches (non-clustered)
     """
 
-    all_branches = None
+    # all_branches = None
+
+    def get_all_common_branches(self):
+
+        list_of_branches = [io.tree.keys() for io in self.list_of_input_objects]
+
+        Output = set(list_of_branches[0])
+        for l in list_of_branches[1:]:
+            Output &= set(l)
+        
+        # Converting to list
+        self.all_branches = list(Output)
+
 
     def __init__(self,input_dictionary,**kwargs):
 
         super().__init__(input_dictionary)
+        self.get_all_common_branches()
 
+  
 
 
 
