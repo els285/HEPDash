@@ -50,7 +50,6 @@ class Histogram_Wrapper:
         # self.branch_name = branch_name
         self.number_of_bins = 26
         self.normalise = kwargs["normalise"] if "normalise" in kwargs else True
-        self.belongs2 = kwargs["belongs2"] if "belongs2" in kwargs else ""
 
         # Plot features
         self.colour = kwargs["colour"] if "colour" in kwargs else None

@@ -22,7 +22,7 @@ from streamlit import cli as stcli
 # Package imports
 from Plot_Multi_2columnC import PhysOb_Page_TwoColumn, MultiPage
 # from Apps2 import Premade_Tree_Comparison_App
-from Tree_Apps2 import Preset 
+from Tree_Apps3 import Preset 
 
 input_dic = {"file1": {"file_path":"~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_particleLevel_even.root" ,"tree_name": "particleLevel_even" , "colour":"blue" },
              "file2": {"file_path":"~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_reco_even.root"          ,"tree_name": "reco_even"           , "colour":"red" }}
@@ -36,10 +36,14 @@ def main():
 
     # Import the data
     data_object = Preset(input_dic)
+    # print(data_object.list_of_input_objects[0].__dict__)
+    # input()
+    # exit()
+    # input_trees = {io.name : io.tree for io in data_object.list_of_input_objects}
 
     # Pass list of trees here
-    muon        =  PhysOb_Page_TwoColumn(phys_ob="Muon",      input_object=data_object,  branches2plot=["mu_pt","mu_eta","mu_phi","mu_e"])
     electron    =  PhysOb_Page_TwoColumn(phys_ob="Electron",  input_object=data_object,  branches2plot=["el_pt","el_eta","el_phi","el_e"])
+    muon        =  PhysOb_Page_TwoColumn(phys_ob="Muon",      input_object=data_object,  branches2plot=["mu_pt","mu_eta","mu_phi","mu_e"])
     jet         =  PhysOb_Page_TwoColumn(phys_ob="Jet",       input_object=data_object,  branches2plot=["jet_pt","jet_eta","jet_phi","jet_e"])
 
     print("Pages written")
