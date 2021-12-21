@@ -1,0 +1,31 @@
+Metadata-Version: 2.1
+Name: HEPDash
+Version: 0.0.1
+Summary: Display histograms from ROOT files in an interactive web environment
+Home-page: https://github.com/ethansimpson285/HEPDash
+Author: Ethan Simpson
+Author-email: ethansimpson285@gmail.com
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/ethansimpson285/HEPDash/issues
+Platform: Linux
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# HEP Dash
+
+Designed to take ROOT TTrees and build interactive web-browser-based notebooks.
+
+Possibly use streamlit, dash more advanced?
+
+Think about functionality and optimal use case...
+
+Most up-to-date functionality so far is the `make_premade_comparison_app.py` function. `make_general_comparison_app.py` has also been created.
+
+
+For effective README exhibiting features of the app, use this site to create screen recordings: https://gifcap.dev/
+
+

@@ -299,11 +299,14 @@ class PhysOb_Page_TwoColumn:
             # Build histograms
             # Initialise list of DataFrames
             dic_of_df = {}
+
             # Automatically compute histogram bounds
             for  io in self.data_object.list_of_input_objects:   # input_trees = {io.name : io.tree for io in data_object.list_of_input_objects}
             # for tree_name,tree in self.dic_of_trees.items():
                 tree_name , tree = io.name , io.tree
+                cuts = "(el_pt>100000)"
                 df = tree[page_data["observable"]].array(library="pd")   # Pulling 
+                # df2 = tree.arrays("jet_pt",cuts,library="pd")["jet_pt"]
                 dic_of_df[tree_name] = df
 
             extrema=extrema_from_dfs(dic_of_df.values())
