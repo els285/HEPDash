@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 
-from Histogram_Classes import PyHist_Object, Histogram_Wrapper
+from hepdash.histograms.Histogram_Classes import PyHist_Object, Histogram_Wrapper
 
 
 def Compute_Ratio(hist1,hist2):

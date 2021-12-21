@@ -20,13 +20,15 @@ import streamlit as st
 from streamlit import cli as stcli
 
 # Package imports
-from BiColumn import PhysOb_Page_TwoColumn, MultiPage
+# from HEPDash import BiColumn, Tree_Apps
+from hepdash.layouts.BiColumn import PhysOb_Page_TwoColumn, MultiPage
 # from Apps2 import Premade_Tree_Comparison_App
-from Tree_Apps import General
+from hepdash.apps.Tree_Apps import Preset 
 
 input_dic = {"file1": {"file_path":"~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_particleLevel_even.root" ,"tree_name": "particleLevel_even" , "colour":"blue" },
              "file2": {"file_path":"~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_reco_even.root"          ,"tree_name": "reco_even"           , "colour":"red" }}
  
+
 def main():
 
     # Initialsie the streamlit web-app object
@@ -34,12 +36,21 @@ def main():
     st.title("HEP Dash")
 
     # Import the data
-    data_object = General(input_dic)
+    data_object = Preset(input_dic)
 
-    the_page   =  PhysOb_Page_TwoColumn(phys_ob="All Branches",   input_object=data_object,  branches2plot=data_object.all_branches)
+    # Pass list of trees here
+    muon        =  PhysOb_Page_TwoColumn(phys_ob="Muon",      input_object=data_object,  branches2plot=["mu_pt","mu_eta","mu_phi","mu_e"])
+    electron    =  PhysOb_Page_TwoColumn(phys_ob="Electron",  input_object=data_object,  branches2plot=["el_pt","el_eta","el_phi","el_e"])
+    jet         =  PhysOb_Page_TwoColumn(phys_ob="Jet",       input_object=data_object,  branches2plot=["jet_pt","jet_eta","jet_phi","jet_e"])
 
-    the_page.Build()
+    print("Pages written")
 
+    MP = MultiPage()
+    # MP.add_page(muon)
+    # MP.add_page(electron)
+    MP.add_page(jet)
+
+    MP.Build_MultiPage()
 
 
 if __name__ == '__main__':

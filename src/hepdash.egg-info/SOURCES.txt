@@ -1,0 +1,13 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+src/hepdash/__init__.py
+src/hepdash/afunc.py
+src/hepdash/bfunc.py
+src/hepdash/test.py
+src/hepdash.egg-info/PKG-INFO
+src/hepdash.egg-info/SOURCES.txt
+src/hepdash.egg-info/dependency_links.txt
+src/hepdash.egg-info/top_level.txt

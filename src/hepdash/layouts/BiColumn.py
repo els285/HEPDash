@@ -41,9 +41,9 @@ import uproot
 import boost_histogram as bh
 
 # Own imports
-from Histogram_Classes import PyHist_Object, Histogram_Wrapper
-from Plotting_Histograms import make_both_plot,make_ratio_only_plot,make_standard_plot
-import Plotters
+from hepdash.histograms.Histogram_Classes import PyHist_Object, Histogram_Wrapper
+from hepdash.histograms.Plotting_Histograms import make_both_plot,make_ratio_only_plot,make_standard_plot
+import hepdash.histograms.Plotters
 
 
 

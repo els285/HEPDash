@@ -8,7 +8,7 @@ import uproot
 from matplotlib.lines import Line2D
 
 
-from Histogram_Classes import Histogram_Wrapper, PyHist_Object
+from hepdash.histograms.Histogram_Classes import Histogram_Wrapper, PyHist_Object
 
 
 from streamlit import cli as stcli

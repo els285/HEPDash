@@ -1,5 +1,5 @@
 import itertools
-from BiColumn import import_ROOT_file
+from hepdash.layouts.BiColumn import import_ROOT_file
 import streamlit as st
 
 from dataclasses import dataclass
