@@ -20,6 +20,16 @@ Histograms can be manipulated and downloaded.
 ## Installation
 
 
+### Github
+Feel free to clone the directory. Preferred: install via `pip` through:
+```bash
+python3 -m pip install git+https://github.com/ethansimpson285/HEPDash.git
+```
+
+### Other
+From PyPi - not uploaded.
+
+
 
 ## From Trees
 
