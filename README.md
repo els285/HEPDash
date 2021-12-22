@@ -53,6 +53,11 @@ python3 -m hepdash.funcs.make_tree <option> config1.yml
 ```
 where `option` corresponds to one of the three options above.
 
+### Development Notes
+* General - Built in 0.0.4, histogram image does not fit on screen.
+* Preset  - Built in 0.0.3, works.
+* Specific - under development
+
 ## From Histograms
 
 Display and manipulate ROOT histograms (maybe other types?) through a HEP-Dash app!
