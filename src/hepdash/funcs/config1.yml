@@ -1,0 +1,16 @@
+# Config File 1
+
+FILE1:
+  name: particle_level
+  file_path: ~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_particleLevel_even.root
+  tree_name: particleLevel_even
+  colour: blue
+  label: pL
+
+
+FILE2:
+  name: reco_level
+  file_path: ~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_reco_even.root
+  tree_name: reco_even
+  colour: red
+  label: nominal

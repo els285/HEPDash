@@ -1,22 +1,20 @@
+from dataclasses import dataclass
 import itertools
-from hepdash.layouts.BiColumn import import_ROOT_file
+import yaml
+import os
+import matplotlib.pyplot as plt
 import streamlit as st
 
-from dataclasses import dataclass
-
-import matplotlib.pyplot as plt
-
-
-# @dataclass
-# class InputObject:
-#     name: str
-#     ROOT_file_path: str
-#     tree_name: str 
-#     tree: any 
-#     # colour: 
+from hepdash.layouts.BiColumn import import_ROOT_file
 
 
 default_colours = plt.rcParams['axes.prop_cycle'].by_key()['color']
+
+def parse_config(yaml_file):
+    assert os.path.isfile(yaml_file), "Config file not found"
+    with open(yaml_file, 'r') as stream:
+        data_loaded = yaml.safe_load(stream)
+    return data_loaded
 
 
 def create_input_object(index,name,ROOT_file_path,tree_name,**kwargs):
@@ -79,7 +77,7 @@ class Tree_Comparison_App:
     def check_trees_for_branches(self):
 
         for io in self.list_of_input_objects:
-            assert all([branch_name in io.tree.keys() for branch_name in self.all_branches]), "Not all prerequisit branches found in tree"
+            assert all([branch_name in io.tree.keys() for branch_name in self.all_branches]), "Not all prerequisite branches found in tree"
 
 
 
@@ -98,6 +96,10 @@ class Preset(Tree_Comparison_App):
         super().__init__(input_dictionary) 
         self.check_trees_for_branches()
 
+    @staticmethod
+    def make_from_config(yaml_file):
+        data_loaded = parse_config(yaml_file)
+        return Preset(data_loaded)
 
 
 
@@ -117,6 +119,12 @@ class Specific(Tree_Comparison_App):
 
 
         super().__init__(input_dictionary)
+
+    @staticmethod
+    def make_from_config(yaml_file):
+        data_loaded = parse_config(yaml_file)
+        return Specific(data_loaded)
+
 
 
 class General(Tree_Comparison_App):
@@ -143,6 +151,11 @@ class General(Tree_Comparison_App):
 
         super().__init__(input_dictionary)
         self.get_all_common_branches()
+
+    @staticmethod
+    def make_from_config(yaml_file):
+        data_loaded = parse_config(yaml_file)
+        return Specific(data_loaded)
 
   
 

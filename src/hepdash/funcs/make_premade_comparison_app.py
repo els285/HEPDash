@@ -20,14 +20,16 @@ import streamlit as st
 from streamlit import cli as stcli
 
 # Package imports
-# from HEPDash import BiColumn, Tree_Apps
 from hepdash.layouts.BiColumn import PhysOb_Page_TwoColumn, MultiPage
-# from Apps2 import Premade_Tree_Comparison_App
 from hepdash.apps.Tree_Apps import Preset 
 
-input_dic = {"file1": {"file_path":"~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_particleLevel_even.root" ,"tree_name": "particleLevel_even" , "colour":"blue" },
-             "file2": {"file_path":"~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_reco_even.root"          ,"tree_name": "reco_even"           , "colour":"red" }}
+# input_dic = {"file1": {"file_path":"~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_particleLevel_even.root" ,"tree_name": "particleLevel_even" , "colour":"blue" },
+#              "file2": {"file_path":"~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_reco_even.root"          ,"tree_name": "reco_even"           , "colour":"red" }}
  
+
+import sys
+config_file = sys.argv[1]
+
 
 def main():
 
@@ -36,8 +38,9 @@ def main():
     st.title("HEP Dash")
 
     # Import the data
-    data_object = Preset(input_dic)
-
+    data_object = Preset.make_from_config(config_file)
+    print("ROOT files loaded")
+ 
     # Pass list of trees here
     muon        =  PhysOb_Page_TwoColumn(phys_ob="Muon",      input_object=data_object,  branches2plot=["mu_pt","mu_eta","mu_phi","mu_e"])
     electron    =  PhysOb_Page_TwoColumn(phys_ob="Electron",  input_object=data_object,  branches2plot=["el_pt","el_eta","el_phi","el_e"])
@@ -46,8 +49,8 @@ def main():
     print("Pages written")
 
     MP = MultiPage()
-    # MP.add_page(muon)
-    # MP.add_page(electron)
+    MP.add_page(muon)
+    MP.add_page(electron)
     MP.add_page(jet)
 
     MP.Build_MultiPage()
@@ -60,5 +63,5 @@ if __name__ == '__main__':
         # branch_name = sys.argv[3]
         main()
     else:
-        sys.argv = ["streamlit", "run", sys.argv[0]]#,sys.argv[1],sys.argv[2]]#,sys.argv[3]]
+        sys.argv = ["streamlit", "run", sys.argv[0],sys.argv[1]]#,sys.argv[2]]#,sys.argv[3]]
         sys.exit(stcli.main())
