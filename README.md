@@ -37,6 +37,12 @@ From PyPi - not uploaded.
 
 Generate and deploy a HEP-Dash app using ROOT TTrees! HEP-Dash automatically handles the histogram construction, projection and rendering.
 
+Pass any number of ROOT files with specified TTrees
+
+There are several varieties of 
+* General - App will diplay histograms for each branch common to all the ROOT TTrees given.
+* Preset - App will display (pT,eta,phi,E) histograms for electron, muon and jet objects.
+* Specific - App will display histograms specified by the user.
 
 
 ## From Histograms
