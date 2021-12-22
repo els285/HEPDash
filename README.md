@@ -44,6 +44,14 @@ There are several varieties of
 * Preset - App will display (pT,eta,phi,E) histograms for electron, muon and jet objects.
 * Specific - App will display histograms specified by the user.
 
+Requires a `config.yml` file to run, which contains the information on each ROOT sample.
+
+To run:
+
+```bash
+python3 -m hepdash.funcs.make_tree <option> config1.yml
+```
+where `option` corresponds to one of the three options above.
 
 ## From Histograms
 
