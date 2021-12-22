@@ -5,7 +5,7 @@ import os
 import matplotlib.pyplot as plt
 import streamlit as st
 
-from hepdash.layouts.BiColumn import import_ROOT_file
+from hepdash.layouts.BiColumn import import_ROOT_file, PhysOb_Page_TwoColumn, MultiPage
 
 
 default_colours = plt.rcParams['axes.prop_cycle'].by_key()['color']
@@ -80,6 +80,18 @@ class Tree_Comparison_App:
             assert all([branch_name in io.tree.keys() for branch_name in self.all_branches]), "Not all prerequisite branches found in tree"
 
 
+    def make_multipage(self):
+
+        MP = MultiPage()
+
+        for page in self.object_pages:
+            MP.add_page(page)
+
+        MP.Build_MultiPage()
+
+    
+
+
 
 
 class Preset(Tree_Comparison_App):
@@ -100,6 +112,16 @@ class Preset(Tree_Comparison_App):
     def make_from_config(yaml_file):
         data_loaded = parse_config(yaml_file)
         return Preset(data_loaded)
+
+    # @staticmethod
+    def add_object_pages(self):
+        muon        =  PhysOb_Page_TwoColumn(phys_ob="Muon",      input_objects=self.list_of_input_objects,  branches2plot=["mu_pt","mu_eta","mu_phi","mu_e"])
+        electron    =  PhysOb_Page_TwoColumn(phys_ob="Electron",  input_objects=self.list_of_input_objects,  branches2plot=["el_pt","el_eta","el_phi","el_e"])
+        jet         =  PhysOb_Page_TwoColumn(phys_ob="Jet",       input_objects=self.list_of_input_objects,  branches2plot=["jet_pt","jet_eta","jet_phi","jet_e"])
+
+        self.object_pages = [muon,electron,jet]
+
+
 
 
 
