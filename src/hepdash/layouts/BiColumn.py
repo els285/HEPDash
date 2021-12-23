@@ -256,9 +256,10 @@ def get_xaxis_label(obs):
 class PhysOb_Page_TwoColumn:
 
 
-    def __init__(self,phys_ob,input_object,branches2plot):
+    def __init__(self,phys_ob,input_objects,branches2plot):
             self.phys_ob        = phys_ob
-            self.data_object    = input_object
+            # self.data_object    = input_object
+            self.list_of_input_objects = input_objects
             self.branches2plot  = branches2plot
             self.plot_types     = {"standard":make_standard_plot,
                                    "standard+ratio":make_both_plot,
@@ -290,7 +291,7 @@ class PhysOb_Page_TwoColumn:
             page_data["num_bins"]   = st.slider('Number of bins',min_value=1,max_value=100,value=50,key=index)
 
 
-            self.dic_of_trees = {io.name : io.tree for io in self.data_object.list_of_input_objects}
+            self.dic_of_trees = {io.name : io.tree for io in self.list_of_input_objects}
 
             if chosen_plot_type=="ratio only" or chosen_plot_type=="standard+ratio":
                 divisor_name =  st.selectbox("Histogram divisor" , self.dic_of_trees.keys())
@@ -301,7 +302,7 @@ class PhysOb_Page_TwoColumn:
             dic_of_df = {}
 
             # Automatically compute histogram bounds
-            for  io in self.data_object.list_of_input_objects:   # input_trees = {io.name : io.tree for io in data_object.list_of_input_objects}
+            for  io in self.list_of_input_objects:   # input_trees = {io.name : io.tree for io in data_object.list_of_input_objects}
             # for tree_name,tree in self.dic_of_trees.items():
                 tree_name , tree = io.name , io.tree
                 cuts = "(el_pt>100000)"
@@ -329,7 +330,7 @@ class PhysOb_Page_TwoColumn:
 
             dic_of_hists = {}
 
-            for io,df in zip(self.data_object.list_of_input_objects,dic_of_df.values()):
+            for io,df in zip(self.list_of_input_objects,dic_of_df.values()):
                 h = generate_wrapped_histogram(page_data["num_bins"],page_data["hist_range"],df,
                                                 normalise=page_data["normalise"],
                                                 colour=io.colour,
