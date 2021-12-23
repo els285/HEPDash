@@ -93,7 +93,6 @@ class Tree_Comparison_App:
 
 
 
-
 class Preset(Tree_Comparison_App):
 
     """
@@ -121,6 +120,12 @@ class Preset(Tree_Comparison_App):
 
         self.object_pages = [muon,electron,jet]
 
+        # Build MultiPage here 
+        MP = MultiPage()
+        for page in self.object_pages:
+            MP.add_page(page)
+        MP.Build_MultiPage()        
+
 
 
 
@@ -139,6 +144,7 @@ class Specific(Tree_Comparison_App):
         self.imported_clustered_branches   = kwargs["clustered_branches"]   if "clustered_branches"   in kwargs and isinstance(kwargs["clustered_branches"],dict)   else {}
         self.all_branches = self.imported_unclustered_branches + self.imported_clustered_branches.values()
 
+        assert len
 
         super().__init__(input_dictionary)
 
@@ -146,6 +152,8 @@ class Specific(Tree_Comparison_App):
     def make_from_config(yaml_file):
         data_loaded = parse_config(yaml_file)
         return Specific(data_loaded)
+
+
 
 
 
@@ -177,7 +185,11 @@ class General(Tree_Comparison_App):
     @staticmethod
     def make_from_config(yaml_file):
         data_loaded = parse_config(yaml_file)
-        return Specific(data_loaded)
+        return General(data_loaded)
+
+    def add_object_pages(self):
+        the_page   =  PhysOb_Page_TwoColumn(phys_ob="All Branches",   input_objects=self.list_of_input_objects,  branches2plot=self.all_branches)
+        the_page.Build()
 
   
 
