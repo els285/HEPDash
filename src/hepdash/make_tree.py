@@ -47,7 +47,7 @@ def main():
     App1.add_object_pages()
     print("Pages written")
 
-    App1.make_multipage()
+    # App1.make_multipage()
     print("Construction complete")
 
 
