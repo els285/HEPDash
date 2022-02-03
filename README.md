@@ -49,7 +49,7 @@ Requires a `config.yml` file to run, which contains the information on each ROOT
 To run:
 
 ```bash
-python3 -m hepdash.funcs.make_tree <option> config1.yml
+python3 -m hepdash.funcs.make_tree_argparse --mode <option> --config config1.yml
 ```
 where `option` corresponds to one of the three options above.
 
