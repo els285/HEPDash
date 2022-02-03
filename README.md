@@ -70,4 +70,6 @@ The current implementation selects branches and projects into histograms each ti
 ## Adding argparse
 Doesn't work well with running from Python.
 Can do 
-```streamlit run <path2file>.make_tree_argparse.py -- <args>
+```
+streamlit run <path2file>.make_tree_argparse.py -- <args>
+```
