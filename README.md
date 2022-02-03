@@ -28,18 +28,17 @@ python3 -m pip install git+https://github.com/ethansimpson285/HEPDash.git
 
 Alternatively, feel free to clone this git.
 
+<hr style="border:2px solid gray"> </hr>
 
 
-## From Trees
+## Build From TTrees
 
-Generate and deploy a HEP-Dash app using ROOT TTrees! HEP-Dash automatically handles the histogram construction, projection and rendering.
+Generate and deploy a HEP-Dash app using ROOT TTrees! HEP-Dash automatically handles the histogram construction, projection and rendering. Pass any number of ROOT files with specified TTrees, and select a variety of dashboard options.
 
-Pass any number of ROOT files with specified TTrees
-
-There are several varieties of 
-* General - App will diplay histograms for each branch common to all the ROOT TTrees given.
-* Preset - App will display (pT,eta,phi,E) histograms for electron, muon and jet objects.
-* Specific - App will display histograms specified by the user.
+For set a set of ROOT files with specified TTrees, you have several options to choose from:
+* General - Dashboard will diplay histograms for each branch common to all the ROOT TTrees given.
+* Preset - Dashboard will display (pT,eta,phi,E) histograms for electron, muon and jet objects - if they exist.
+* Specific - App will display histograms specified by the user. A config file 
 
 Requires a `config.yml` file to run, which contains the information on each ROOT sample.
 
