@@ -42,9 +42,9 @@ def main():
     print("ROOT files loaded")
  
     # Pass list of trees here
-    muon        =  PhysOb_Page_TwoColumn(phys_ob="Muon",      input_object=data_object,  branches2plot=["mu_pt","mu_eta","mu_phi","mu_e"])
-    electron    =  PhysOb_Page_TwoColumn(phys_ob="Electron",  input_object=data_object,  branches2plot=["el_pt","el_eta","el_phi","el_e"])
-    jet         =  PhysOb_Page_TwoColumn(phys_ob="Jet",       input_object=data_object,  branches2plot=["jet_pt","jet_eta","jet_phi","jet_e"])
+    muon        =  PhysOb_Page_TwoColumn(phys_ob="Muon",      input_objects=data_object,  branches2plot=["mu_pt","mu_eta","mu_phi","mu_e"])
+    electron    =  PhysOb_Page_TwoColumn(phys_ob="Electron",  input_objects=data_object,  branches2plot=["el_pt","el_eta","el_phi","el_e"])
+    jet         =  PhysOb_Page_TwoColumn(phys_ob="Jet",       input_objects=data_object,  branches2plot=["jet_pt","jet_eta","jet_phi","jet_e"])
 
     print("Pages written")
 

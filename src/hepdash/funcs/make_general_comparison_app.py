@@ -36,7 +36,10 @@ def main():
     # Import the data
     data_object = General(input_dic)
 
-    the_page   =  PhysOb_Page_TwoColumn(phys_ob="All Branches",   input_object=data_object,  branches2plot=data_object.all_branches)
+    print(data_object.__dict__)
+    input()
+
+    the_page   =  PhysOb_Page_TwoColumn(phys_ob="All Branches",   input_objects=data_object,  branches2plot=data_object.all_branches)
 
     the_page.Build()
 
