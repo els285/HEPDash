@@ -38,22 +38,28 @@ def main():
     st.title("HEP Dash")
 
     # Import the data
-    data_object = Preset.make_from_config(config_file)
+    APP = Preset.make_from_config(config_file)
     print("ROOT files loaded")
+
+    APP.add_object_pages()
+
+
+
+
  
     # Pass list of trees here
-    muon        =  PhysOb_Page_TwoColumn(phys_ob="Muon",      input_objects=data_object,  branches2plot=["mu_pt","mu_eta","mu_phi","mu_e"])
-    electron    =  PhysOb_Page_TwoColumn(phys_ob="Electron",  input_objects=data_object,  branches2plot=["el_pt","el_eta","el_phi","el_e"])
-    jet         =  PhysOb_Page_TwoColumn(phys_ob="Jet",       input_objects=data_object,  branches2plot=["jet_pt","jet_eta","jet_phi","jet_e"])
+    # muon        =  PhysOb_Page_TwoColumn(phys_ob="Muon",      input_objects=data_object,  branches2plot=["mu_pt","mu_eta","mu_phi","mu_e"])
+    # electron    =  PhysOb_Page_TwoColumn(phys_ob="Electron",  input_objects=data_object,  branches2plot=["el_pt","el_eta","el_phi","el_e"])
+    # jet         =  PhysOb_Page_TwoColumn(phys_ob="Jet",       input_objects=data_object,  branches2plot=["jet_pt","jet_eta","jet_phi","jet_e"])
 
-    print("Pages written")
+    # print("Pages written")
 
-    MP = MultiPage()
-    MP.add_page(muon)
-    MP.add_page(electron)
-    MP.add_page(jet)
+    # MP = MultiPage()
+    # MP.add_page(muon)
+    # MP.add_page(electron)
+    # MP.add_page(jet)
 
-    MP.Build_MultiPage()
+    # MP.Build_MultiPage()
 
 
 if __name__ == '__main__':

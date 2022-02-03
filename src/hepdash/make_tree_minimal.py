@@ -20,13 +20,20 @@ import streamlit as st
 from streamlit import cli as stcli
 
 # Package imports
-from hepdash.layouts.BiColumn import PhysOb_Page_TwoColumn, MultiPage
-# from Apps2 import Premade_Tree_Comparison_App
-from hepdash.apps.Tree_Apps import General
+from hepdash.apps.Tree_Apps import Preset, General, Specific
 
-input_dic = {"file1": {"file_path":"~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_particleLevel_even.root" ,"tree_name": "particleLevel_even" , "colour":"blue" },
-             "file2": {"file_path":"~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_reco_even.root"          ,"tree_name": "reco_even"           , "colour":"red" }}
- 
+
+import sys
+app_type    = sys.argv[1]
+config_file = sys.argv[2]
+
+if app_type=="preset" or app_type=="Preset":
+    app_func = Preset
+elif app_type=="general" or app_type=="General":
+    app_func = General
+elif app_type=="specific" or app_type=="Specific":
+    app_func = Specific
+
 def main():
 
     # Initialsie the streamlit web-app object
@@ -34,14 +41,14 @@ def main():
     st.title("HEP Dash")
 
     # Import the data
-    data_object = General(input_dic)
+    App1 = app_func.make_from_config(config_file)
+    print("ROOT files loaded")
 
-    print(data_object.__dict__)
-    input()
+    App1.add_object_pages()
+    print("Pages written")
 
-    the_page   =  PhysOb_Page_TwoColumn(phys_ob="All Branches",   input_objects=data_object,  branches2plot=data_object.all_branches)
-
-    the_page.Build()
+    # App1.make_multipage()
+    print("Construction complete")
 
 
 
@@ -52,5 +59,5 @@ if __name__ == '__main__':
         # branch_name = sys.argv[3]
         main()
     else:
-        sys.argv = ["streamlit", "run", sys.argv[0]]#,sys.argv[1],sys.argv[2]]#,sys.argv[3]]
+        sys.argv = ["streamlit", "run", sys.argv[0],sys.argv[1],sys.argv[2]]#,sys.argv[3]]
         sys.exit(stcli.main())

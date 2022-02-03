@@ -1,0 +1,7 @@
+# Config File 1
+
+UNCATEGORISED: jet_pt,jet_eta,jet_phi
+CAT1: el_pt,el_eta
+CAT2: mu_pt,mu_eta
+ 
+
