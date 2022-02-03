@@ -1,13 +1,13 @@
 '''
 HEP-Dash
 Ethan L Simpson
-December 10th 2021
+February 3rd 2021
 
 Notes:
 - Require that the primary function for creating the web-app must be called main()
-- How to re-factor this into something more user freindly?
-- Just now, the only thing the user is required to do is edit the input dic - this could come from a config file
-- Or it could come from a parser but probably complex
+- Factored so that this can be run from the command line, using syntax
+    ` python3 -m hepdash.make_tree -mode <option> --config config1.yml `
+- The HEPDash package can be pip-installed and thus the following line can be run from anywhere (so long as the config is present)
 '''
 
 # Imports

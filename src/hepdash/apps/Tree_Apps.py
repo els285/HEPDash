@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 import itertools
-import yaml
 import os
+
+import yaml
 import matplotlib.pyplot as plt
 import streamlit as st
 
@@ -9,6 +10,15 @@ from hepdash.layouts.BiColumn import import_ROOT_file, PhysOb_Page_TwoColumn, Mu
 
 
 default_colours = plt.rcParams['axes.prop_cycle'].by_key()['color']
+
+"""
+Tree Apps are designed to be used with ROOT TTrees, 
+    with the projections of histograms out of TTrees and the rendering of the histograms handled automiatcally.
+
+
+"""
+
+
 
 def parse_config(yaml_file):
     assert os.path.isfile(yaml_file), "Config file not found"
@@ -52,6 +62,9 @@ class Tree_Comparison_App:
 
     """
     Base class Tree comparison app
+    Takes input_dictionary which contains names and filepaths of ROOT files
+
+    Common two-column design, with option for which branches are rendered depending on which inherited class is used.
     """
 
     def __init__(self,input_dictionary):
