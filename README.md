@@ -49,7 +49,7 @@ Requires a `config.yml` file to run, which contains the information on each ROOT
 To run:
 
 ```bash
-python3 -m hepdash.funcs.make_tree <option> config1.yml
+python3 -m hepdash.funcs.make_tree_argparse --mode <option> --config config1.yml
 ```
 where `option` corresponds to one of the three options above.
 
@@ -65,3 +65,11 @@ Display and manipulate ROOT histograms (maybe other types?) through a HEP-Dash a
 
 ## Additional Information on Code
 The current implementation selects branches and projects into histograms each time the streamlit app flow is updated (i.e. every time a button is pressed). This was found to be faster than storing all branches and accessing them when necessary. However, for larger scale presentation of multiple histograms, this will possibly become necessary...
+
+
+## Adding argparse
+Doesn't work well with running from Python.
+Can do 
+```
+streamlit run <path2file>.make_tree_argparse.py -- <args>
+```
