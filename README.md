@@ -1,12 +1,11 @@
 # HEP Dash
 
-Designed to take ROOT TTrees and build interactive web-browser-based notebooks.
+**Welcome to HEPDash...**
+#Death2theTBrowser
 
-Possibly use streamlit, dash more advanced?
+Designed to take ROOT TTrees and build interactive, web-based histogram dashboards!
+Effortlessly create interactive histograms from ROOT TTrees or pre-existing histograms, and share easily.
 
-Think about functionality and optimal use case...
-
-Most up-to-date functionality so far is the `make_premade_comparison_app.py` function. `make_general_comparison_app.py` has also been created.
 
 
 ![alt text](examples/example_fig.png "Title")
@@ -18,18 +17,16 @@ For effective README exhibiting features of the app, use this site to create scr
 Histograms can be manipulated and downloaded.
 
 
-
 ## Installation
 
 
 ### Github
-Feel free to clone the directory. Preferred: install via `pip` through:
+Install via `pip` through:
 ```bash
 python3 -m pip install git+https://github.com/ethansimpson285/HEPDash.git
 ```
 
-### Other
-From PyPi - not uploaded.
+Alternatively, feel free to clone this git.
 
 
 
