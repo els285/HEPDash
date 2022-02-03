@@ -140,11 +140,12 @@ class Specific(Tree_Comparison_App):
 
     def __init__(self,input_dictionary,**kwargs):
 
-        self.imported_unclustered_branches = kwargs["unclustered_branches"] if "unclustered_branches" in kwargs and isinstance(kwargs["unclustered_branches"],list) else []
-        self.imported_clustered_branches   = kwargs["clustered_branches"]   if "clustered_branches"   in kwargs and isinstance(kwargs["clustered_branches"],dict)   else {}
-        self.all_branches = self.imported_unclustered_branches + self.imported_clustered_branches.values()
+        # self.imported_unclustered_branches = kwargs["unclustered_branches"] if "unclustered_branches" in kwargs and isinstance(kwargs["unclustered_branches"],list) else []
+        # self.imported_clustered_branches   = kwargs["clustered_branches"]   if "clustered_branches"   in kwargs and isinstance(kwargs["clustered_branches"],dict)   else {}
+        # self.all_branches = self.imported_unclustered_branches + self.imported_clustered_branches.values()
+        # self.dic_of_requested_branches = {}
 
-        assert len
+        # assert len
 
         super().__init__(input_dictionary)
 
@@ -152,6 +153,42 @@ class Specific(Tree_Comparison_App):
     def make_from_config(yaml_file):
         data_loaded = parse_config(yaml_file)
         return Specific(data_loaded)
+
+    @classmethod
+    def parse_specifics(self,specifics_file):
+        assert os.path.isfile(specifics_file), "Config file not found"
+        with open(specifics_file, 'r') as stream:
+            data_loaded = yaml.safe_load(stream)
+
+        self.dic_of_requested_branches = {}
+        
+        for cat,br in data_loaded.items():
+            self.dic_of_requested_branches[cat] = br.split(",")
+
+        # self.imported_unclustered_branches = {"UNCATEGORISED" : dic_of_requested_branches["UNCATEGORISED"]}
+        # self.imported_clustered_branches   = {(k,v) for (k,v) in dic_of_requested_branches.items() if k!="UNCATEGORISED"}
+
+    def add_object_pages(self):
+
+        self.object_pages = []
+        for k,v in self.dic_of_requested_branches.items():
+            Obj_Page = PhysOb_Page_TwoColumn(phys_ob=k,      
+                                                input_objects=self.list_of_input_objects,  
+                                                branches2plot=v)
+            self.object_pages.append(Obj_Page)
+
+        # Build MultiPage here 
+        MP = MultiPage()
+        for page in self.object_pages:
+            MP.add_page(page)
+        MP.Build_MultiPage()        
+
+
+        
+
+
+
+
 
 
 
