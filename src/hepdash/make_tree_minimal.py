@@ -27,12 +27,12 @@ import sys
 app_type    = sys.argv[1]
 config_file = sys.argv[2]
 
-if app_type=="preset":
+if app_type=="preset" or app_type=="Preset":
     app_func = Preset
-elif app_type=="general":
+elif app_type=="general" or app_type=="General":
     app_func = General
-elif app_type=="specific":
-    pass
+elif app_type=="specific" or app_type=="Specific":
+    app_func = Specific
 
 def main():
 
