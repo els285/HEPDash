@@ -65,3 +65,9 @@ Display and manipulate ROOT histograms (maybe other types?) through a HEP-Dash a
 
 ## Additional Information on Code
 The current implementation selects branches and projects into histograms each time the streamlit app flow is updated (i.e. every time a button is pressed). This was found to be faster than storing all branches and accessing them when necessary. However, for larger scale presentation of multiple histograms, this will possibly become necessary...
+
+
+## Adding argparse
+Doesn't work well with running from Python.
+Can do 
+```streamlit run <path2file>.make_tree_argparse.py -- <args>
