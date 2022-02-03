@@ -49,9 +49,31 @@ Requires a `config.yml` file to run, which contains the information on each ROOT
 To run:
 
 ```bash
-python3 -m hepdash.funcs.make_tree <option> config1.yml
+python3 -m hepdash.funcs.make_tree -mode <option> --config config1.yml 
 ```
 where `option` corresponds to one of the three options above.
+
+An example config file may look like:
+```yaml
+# Config File 1
+
+FILE1:
+  name: particle_level
+  file_path: ~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_particleLevel_even.root
+  tree_name: particleLevel_even
+  colour: blue
+  label: pL
+
+
+FILE2:
+  name: reco_level
+  file_path: ~/Documents/Qualification_Task/TTbar_Samples/ttbar_dec15_reco_even.root
+  tree_name: reco_even
+  colour: red
+  label: nominal
+```
+
+If you wish to run the `Specific` option, an additional arugment is required `--specifics specific_branches.yml`, where this YAML config file contains information on the branches you wish to run.
 
 ### Development Notes
 * General - Built in 0.0.4, histogram image does not fit on screen.
